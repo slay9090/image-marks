@@ -7,7 +7,8 @@ export const markuper = () => {
   let ctx: any = null;
   const img = new Image();
   const differenceInterval = 10;
-
+  const dataSetSmall = [ { "x": 4, "y": 291.5 }, { "x": 34, "y": 281.5 }, { "x": 51, "y": 264.5 }, { "x": 44.59375, "y": 224.5 }, { "x": 47.5, "y": 197.5 }, { "x": 43.25, "y": 159.5 }, { "x": 48.03125, "y": 111.5 }, { "x": 65.5, "y": 71.5 }, { "x": 98.5, "y": 42.5 }, { "x": 156.5, "y": 34.5 }, { "x": 190.5, "y": 40.5 }, { "x": 216.5, "y": 48.5 }, { "x": 256.5, "y": 119.5 }, { "x": 268.5, "y": 166.5 }, { "x": 267.5, "y": 199.5 }, { "x": 269.5, "y": 229.5 }, { "x": 268.5, "y": 255.5 }, { "x": 258.5, "y": 272.5 }, { "x": 268.5, "y": 295.5 }, { "x": 4, "y": 291.5 } ]
+  let imgSizeFactor = 1
   const undo = () => {
     polygon.value.points.splice(-1);
   };
@@ -16,13 +17,12 @@ export const markuper = () => {
     return !(canvas == event.target || canvas.contains(event.target));
   };
 
-  const setImage = (imgSource: any) => {
+  const setImage = (imgSource: any, _imgSizeFactor: any) => {
+    imgSizeFactor = _imgSizeFactor
     if (!imgSource) return;
-    //const ctx2 = canvas.getContext("2d");
-    //let img = new Image();
     img.crossOrigin = "";
     img.onload = () => {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, img.width / imgSizeFactor, img.height / imgSizeFactor);
     };
     img.src = imgSource;
   };
@@ -132,7 +132,7 @@ export const markuper = () => {
       if (mouse.update) {
         cursor = "crosshair";
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, img.width / imgSizeFactor, img.height / imgSizeFactor);
         if (!dragging) {
           activePoint = polygon.value.closest(mouse);
         }

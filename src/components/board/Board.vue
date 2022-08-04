@@ -9,29 +9,32 @@
   <button @click="markup.undo"> back </button>
   <button @click="markup.setMarks"> setLabels </button>
   <button @click="markup.closePath"> closePath </button>
+  <button @click="dataSet.calc(file.previewImage, markup.pointsData.value, file.sizeFactor.value)"> saveDataSet </button>
   {{markup.pointsData}}
+  {{dataSet.result}}
+  ---------
+  {{file.sizeFactor}}
 
 </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import {markuper, fileUpload} from "./utils"
+import {markuper, fileUpload, result} from "./utils"
 
 export default defineComponent( {
 
 
 
   setup(){
-
     const markup = {...markuper()}
     const file = {...fileUpload()}
+    const dataSet = { ...result() }
     return {
       markup,
-      file
+      file,
+      dataSet
     }
-
-
   }
 
 })
