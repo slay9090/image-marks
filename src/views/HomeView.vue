@@ -25,7 +25,7 @@ export default defineComponent({
     };
   },
   methods: {
-    setData(data) {
+    setData(data: any) {
       console.log("emit");
       this.dataSets = data;
     },
