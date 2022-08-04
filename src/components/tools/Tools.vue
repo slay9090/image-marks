@@ -1,5 +1,5 @@
 <template>
-  <h1>TOOLS</h1>
+  <h1>Создание датасет</h1>
 </template>
 
 <script setup lang="ts">

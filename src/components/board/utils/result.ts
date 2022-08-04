@@ -1,6 +1,6 @@
 import {ref} from "vue";
 
-export function result(){
+export function result(emit: any){
 
     const result = ref()
 
@@ -9,7 +9,7 @@ export function result(){
         console.log(points)
 
         result.value = {
-           // image: image,
+            image: image,
             labels: points.map((el: any) => {
                 return {
                     x: el.x * imgSizeFactor,
@@ -18,6 +18,7 @@ export function result(){
             }),
             imgSizeFactor: imgSizeFactor
         }
+        emit('save', result.value)
     }
 
     return {

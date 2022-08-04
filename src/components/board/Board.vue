@@ -1,55 +1,64 @@
 <template>
-<div>
+  <div class="markup">
+    <div class="markup_head">
+      <input
+        type="file"
+        accept="image/jpeg"
+        @change="file.uploadImage($event, markup.setImage)"
+      />
+    </div>
 
-
-  <input type="file" accept="image/jpeg" @change="file.uploadImage($event, markup.setImage)">
-
-  <canvas id="canvas" width=300 height=300></canvas>
-  <div class="emp"></div>
-  <button @click="markup.undo"> back </button>
-  <button @click="markup.setMarks"> setLabels </button>
-  <button @click="markup.closePath"> closePath </button>
-  <button @click="dataSet.calc(file.previewImage, markup.pointsData.value, file.sizeFactor.value)"> saveDataSet </button>
-  {{markup.pointsData}}
-  {{dataSet.result}}
-  ---------
-  {{file.sizeFactor}}
-
-</div>
+    <div class="markup_dashboard">
+      <canvas id="canvas" width="300" height="300"></canvas>
+    </div>
+    <div class="markup_footer">
+      <button @click="markup.undo">back</button>
+      <button @click="markup.setMarks">setLabels</button>
+      <button @click="markup.closePath">closePath</button>
+      <button
+        @click="
+          dataSet.calc(
+            file.previewImage,
+            markup.pointsData.value,
+            file.sizeFactor.value
+          )
+        "
+      >
+        saveDataSet
+      </button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import {markuper, fileUpload, result} from "./utils"
+import { defineComponent } from "vue";
+import { markuper, fileUpload, result } from "./utils";
 
-export default defineComponent( {
-
-
-
-  setup(){
-    const markup = {...markuper()}
-    const file = {...fileUpload()}
-    const dataSet = { ...result() }
+export default defineComponent({
+  setup(props, { emit }) {
+    const markup = { ...markuper() };
+    const file = { ...fileUpload() };
+    const dataSet = { ...result(emit) };
     return {
       markup,
       file,
-      dataSet
-    }
-  }
-
-})
-
-
-
-
+      dataSet,
+    };
+  },
+});
 </script>
 
 <style scoped lang="scss">
-#canvas{
-  border:1px solid black;
+#canvas {
+  border: 1px solid black;
 }
-.emp{
-  width: 100%;
-  height: 200px;
+button, input {
+  padding: 5px;
+  margin: 5px;
+}
+.markup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
